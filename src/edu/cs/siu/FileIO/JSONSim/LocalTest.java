@@ -11,6 +11,7 @@ class LocalTest {
 		JsonSmith json = new JsonSmith();
 		json.generateHosts(5);
 		json.generateCloudlets(100);
-		json.GenerateJson("json.json");
+		json.useAmazonInstances();
+		json.GenerateJson("files/example.json");
 	}
 }
