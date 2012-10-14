@@ -2,7 +2,11 @@ package edu.siu.cs.driver;
 
 import java.util.List;
 
+import org.cloudbus.cloudsim.Datacenter;
+import org.cloudbus.cloudsim.DatacenterBroker;
+import org.cloudbus.cloudsim.DatacenterCharacteristics;
 import org.cloudbus.cloudsim.Host;
+import org.cloudbus.cloudsim.VmAllocationPolicySimple;
 import org.cloudbus.cloudsim.VmSchedulerTimeShared;
 import org.cloudbus.cloudsim.core.CloudSim;
 import org.cloudbus.cloudsim.provisioners.BwProvisionerSimple;
@@ -20,8 +24,13 @@ public class Driver {
 		CloudSim.init(1, null, false);
 		JsonParse j = new JsonParse();
 		j.parseJson("files/example.json");
-		@SuppressWarnings("unused")
 		List<Host> hosts = j.getHosts(RamProvisionerSimple.class, BwProvisionerSimple.class, VmSchedulerTimeShared.class, PeProvisionerSimple.class);
-		
+		DatacenterCharacteristics dcc = j.getDatacenterCharacteristics(hosts);
+		try {
+			Datacenter dc = new Datacenter("test",dcc,new VmAllocationPolicySimple(hosts),null,0);
+			DatacenterBroker broker = new DatacenterBroker("broker");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

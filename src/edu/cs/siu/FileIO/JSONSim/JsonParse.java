@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.cloudbus.cloudsim.DatacenterCharacteristics;
 import org.cloudbus.cloudsim.Host;
 
 import com.google.gson.Gson;
@@ -58,5 +59,9 @@ public class JsonParse {
 		while(it.hasNext())
 			result.addAll(((HostClass)it.next()).convertToHost(result.size(), ram, bw, vm, pe));
 		return result;
+	}
+	
+	public DatacenterCharacteristics getDatacenterCharacteristics(List<? extends Host> hosts) {
+		return s.datacenterCharacteristics.convertToDatacenterCharacteristics(hosts);
 	}
 }
