@@ -9,6 +9,7 @@ import java.util.List;
 import org.cloudbus.cloudsim.Cloudlet;
 import org.cloudbus.cloudsim.DatacenterCharacteristics;
 import org.cloudbus.cloudsim.Host;
+import org.cloudbus.cloudsim.Vm;
 
 import com.google.gson.Gson;
 
@@ -75,10 +76,18 @@ public class JsonParse {
 		}
 		ArrayList<CloudletClass> cloudlets = this.s.getCloudlets();
 		List<Cloudlet> result = new ArrayList<Cloudlet>();
-		Iterator it = cloudlets.iterator();
+		Iterator<CloudletClass> it = cloudlets.iterator();
 		int id = 0;
 		while(it.hasNext()) {
 			result.add(((CloudletClass)it.next()).convertToCloudlet(id++, cpuUtilization, ramUtilization, bwUtilization));
+		}
+		return result;
+	}
+	
+	public <T> List<Vm> getVmInstanceTypes(int brokerID,Class<T> cloudletScheduler) {
+		List<Vm> result = new ArrayList<Vm>();
+		for(int i = 0; i < this.s.vmInstances.length; i++) {
+			result.add(this.s.vmInstances[i].convertToVm(i, brokerID, cloudletScheduler));
 		}
 		return result;
 	}

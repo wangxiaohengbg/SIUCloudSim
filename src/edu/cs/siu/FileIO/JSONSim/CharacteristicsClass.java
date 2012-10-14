@@ -7,14 +7,14 @@ import org.cloudbus.cloudsim.Host;
 
 public class CharacteristicsClass {
 
-	public String architecture;
-	public String os;
-	public String vmm;
-	public double timeZone;
-	public double costPerSec;
-	public double costPerMem;
-	public double costPerStorage;
-	public double costPerBw;
+	private String architecture;
+	private String os;
+	private String vmm;
+	private double timeZone;
+	private double costPerSec;
+	private double costPerMem;
+	private double costPerStorage;
+	private double costPerBw;
     
     public CharacteristicsClass(String arch, String os, String vmManager,
     		double timeZone, double costPerSec, double costPerMem,

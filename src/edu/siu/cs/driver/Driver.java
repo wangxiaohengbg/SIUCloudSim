@@ -1,15 +1,16 @@
 package edu.siu.cs.driver;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.cloudbus.cloudsim.Cloudlet;
+import org.cloudbus.cloudsim.CloudletSchedulerTimeShared;
 import org.cloudbus.cloudsim.Datacenter;
 import org.cloudbus.cloudsim.DatacenterBroker;
 import org.cloudbus.cloudsim.DatacenterCharacteristics;
 import org.cloudbus.cloudsim.Host;
 import org.cloudbus.cloudsim.UtilizationModelFull;
+import org.cloudbus.cloudsim.Vm;
 import org.cloudbus.cloudsim.VmAllocationPolicySimple;
 import org.cloudbus.cloudsim.VmSchedulerTimeShared;
 import org.cloudbus.cloudsim.core.CloudSim;
@@ -55,5 +56,10 @@ public class Driver {
 		while(it.hasNext()) {
 			((Cloudlet)it.next()).setUserId(broker.getId());
 		}
+		
+		List<Vm> vmInstanceTypes = j.getVmInstanceTypes(broker.getId(), CloudletSchedulerTimeShared.class);
+		broker.submitVmList(vmInstanceTypes);
+		
+		CloudSim.startSimulation();
 	}
 }
