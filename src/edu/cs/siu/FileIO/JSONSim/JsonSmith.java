@@ -51,6 +51,21 @@ public class JsonSmith {
 	private long CLOUDLETmaxOutputSize = 30000;
 	private long CLOUDLEToutputSizeInterval = 1;
 	
+	//Default values for generating a Characteristics Class
+	private String CHARarchitecture = "x86";
+	private String CHARos = "Linux";
+	private String CHARvmm = "Xen";
+	private double CHARtimeZone = 0;
+	private double CHARminCostPerSec = 0;
+	private double CHARmaxCostPerSec = 0;
+	private double CHARminCostPerMem = 0.05;
+	private double CHARmaxCostPerMem = 0.05;
+	private double CHARminCostPerStorage = 0.1;
+	private double CHARmaxCostPerStorage = 0.1;
+	private double CHARminCostPerBw = 0.1;
+	private double CHARmaxCostPerBw = 0.1;
+	private int CHARcostPrecision = 2;
+	
 	//Global sim value, will be written to/from the JSON file
 	Sim s = new Sim();
 	
@@ -70,7 +85,6 @@ public class JsonSmith {
 			writeToFile(json,filename);
 			return s;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
@@ -447,6 +461,98 @@ public class JsonSmith {
 		this.s.addCloudlets(cloudlets);
 	}
 	
+	private CharacteristicsClass randomCharacteristics() {
+		CharacteristicsClass result = new CharacteristicsClass(
+				this.CHARarchitecture,
+				this.CHARos,
+				this.CHARvmm,
+				this.CHARtimeZone,
+				this.randomNumber(this.CHARminCostPerSec,this.CHARmaxCostPerSec,this.CHARcostPrecision),
+				this.randomNumber(this.CHARminCostPerMem,this.CHARmaxCostPerMem,this.CHARcostPrecision),
+				this.randomNumber(this.CHARminCostPerStorage,this.CHARmaxCostPerStorage,this.CHARcostPrecision),
+				this.randomNumber(this.CHARminCostPerBw,this.CHARmaxCostPerBw,this.CHARcostPrecision));
+		return result;
+	}
+	
+    public void setDatacenterCharacteristics(String arch, String os, String vmManager,
+    		double timeZone, double minCostPerSec, double minCostPerMem,
+    		double minCostPerStorage, double minCostPerBw, double maxCostPerSec, double maxCostPerMem,
+    		double maxCostPerStorage, double maxCostPerBw, int precision) {
+    	this.CHARarchitecture = arch;
+    	this.CHARos = os;
+    	this.CHARvmm = vmManager;
+    	this.CHARtimeZone = timeZone;
+    	this.CHARminCostPerSec = minCostPerSec;
+    	this.CHARmaxCostPerSec = maxCostPerSec;
+    	this.CHARminCostPerMem = minCostPerMem;
+    	this.CHARmaxCostPerMem = maxCostPerMem;
+    	this.CHARminCostPerStorage = minCostPerStorage;
+    	this.CHARmaxCostPerStorage = maxCostPerStorage;
+    	this.CHARminCostPerBw = minCostPerBw;
+    	this.CHARmaxCostPerBw = maxCostPerBw;
+    	this.CHARcostPrecision = precision;
+    }
+    
+    public void setDatacenterArchitecture(String arch) {
+    	this.CHARarchitecture = arch;
+    }
+    
+    public void setDatacenterOs(String os) {
+    	this.CHARos=os;
+    }
+    
+    public void setDatacentervmm(String vmm) {
+    	this.CHARvmm = vmm;
+    }
+    
+    public void setDatacenterTimeZone(double timeZone) {
+    	this.CHARtimeZone = timeZone;
+    }
+	
+	public void setDatacenterCostPerSec(double min, double max) {
+		this.CHARminCostPerSec = min;
+		this.CHARminCostPerSec = max;
+	}
+	
+	public void setDatacenterCostPerSec(double cost) {
+		this.CHARminCostPerSec = cost;
+		this.CHARmaxCostPerSec = cost;
+	}
+	
+	public void setDatacenterCostPerMem(double min, double max) {
+		this.CHARminCostPerMem = min;
+		this.CHARminCostPerMem = max;
+	}
+	
+	public void setDatacenterCostPerMem(double cost) {
+		this.CHARminCostPerMem = cost;
+		this.CHARmaxCostPerMem = cost;
+	}
+	
+	public void setDatacenterCostPerStorage(double min, double max) {
+		this.CHARminCostPerStorage = min;
+		this.CHARminCostPerStorage = max;
+	}
+	
+	public void setDatacenterCostPerStorage(double cost) {
+		this.CHARminCostPerStorage = cost;
+		this.CHARmaxCostPerStorage = cost;
+	}
+	
+	public void setDatacenterCostPerBw(double min, double max) {
+		this.CHARminCostPerBw = min;
+		this.CHARminCostPerBw = max;
+	}
+	
+	public void setDatacenterCostPerBw(double cost) {
+		this.CHARminCostPerBw = cost;
+		this.CHARmaxCostPerBw = cost;
+	}
+	
+	public void generateDatacenterCharacteristics() {
+		this.s.datacenterCharacteristics = this.randomCharacteristics();
+	}
+	
 	private int randomNumber(int minValue, int maxValue, int interval) {
 		int values = (maxValue-minValue+1)/interval;
 		if(interval>1)
@@ -459,5 +565,23 @@ public class JsonSmith {
 		if(interval>1)
 			values++;
 		return minValue + ((long)(Math.random()*9223372036854775807l)%values)*interval;
+	}
+	
+	/**
+	 * Generate a random double value greater than or equal to min and
+	 * less than max.
+	 * 
+	 * @param minValue
+	 * The minimum value generated
+	 * @param maxValue
+	 * The maximum value generated
+	 * @param precision
+	 * The number of decimal places to include
+	 * @return
+	 * A random double
+	 */
+	private double randomNumber(double minValue, double maxValue, int precision) {
+		double round = Math.pow(10, precision);
+		return ((int)((((maxValue - minValue)*Math.random())+minValue)*round))/round;
 	}
 }

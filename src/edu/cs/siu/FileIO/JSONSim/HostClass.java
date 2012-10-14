@@ -1,5 +1,16 @@
 package edu.cs.siu.FileIO.JSONSim;
 
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.cloudbus.cloudsim.Host;
+import org.cloudbus.cloudsim.Pe;
+import org.cloudbus.cloudsim.VmScheduler;
+import org.cloudbus.cloudsim.provisioners.BwProvisioner;
+import org.cloudbus.cloudsim.provisioners.PeProvisioner;
+import org.cloudbus.cloudsim.provisioners.RamProvisioner;
+
 /**
  * A representation of the CloudSim Host class that is used to generate and parse
  * JSON files using Gson. This will be converted to/from an actual CloudSim Host
@@ -8,11 +19,11 @@ package edu.cs.siu.FileIO.JSONSim;
  * @author Crackers
  */
 class HostClass {
-	public int quantity; //How many of these hosts exist in the data center
-	public int ram; // host memory (MB)
-	public long storage; // host storage
-	public int bw;
-	public int[] processors;
+	private int quantity; //How many of these hosts exist in the data center
+	private int ram; // host memory (MB)
+	private long storage; // host storage
+	private int bw;
+	private int[] processors;
 	
 	/**
 	 * Constructor
@@ -39,5 +50,37 @@ class HostClass {
 		this.bw = bw;
 		this.processors = processors;
 	}
-
+	
+	public <T,S,U,V> List<Host> convertToHost(int id,Class<T> ram, Class<S> bw, Class<U> vm, Class<V> pe) {
+		ArrayList<Host> result = new ArrayList<Host>();
+		RamProvisioner ramP;
+		BwProvisioner bwP;
+		VmScheduler vmP;
+		List<Pe> peList = new ArrayList<Pe>();
+		int peId = 0;
+		
+		//Convert the generics to provisioning policiesS
+		try {
+			Constructor<T> ramC = ram.getConstructor(int.class);
+			Constructor<S> bwC = bw.getConstructor(long.class);
+			Constructor<U> vmC = vm.getConstructor(List.class);
+			Constructor<V> peC = pe.getConstructor(double.class);
+			//Create the processors to give the VMAllocationPolicy's constructor
+			for(int i = 0; i < this.processors.length; i++) {
+				peList.add(new Pe(peId++,(PeProvisioner)peC.newInstance(this.processors[i])));
+			}
+			ramP = (RamProvisioner)ramC.newInstance(this.ram);
+			bwP = (BwProvisioner)bwC.newInstance(this.bw);
+			vmP = (VmScheduler)vmC.newInstance(peList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		for(int i = 0; i < quantity; i++) {
+			result.add(new Host(id++, ramP, bwP, this.storage, peList, vmP));
+		}
+		
+		return result;
+	}
 }

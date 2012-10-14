@@ -9,10 +9,12 @@ import java.util.ArrayList;
  * versions of the following classes:<br>
  * Host<br>
  * VM<br>
- * Cloudlet
+ * Cloudlet<br>
+ * DatacenterCharacteristics
  * @author Crackers
  */
-public class Sim {
+class Sim {
+	public CharacteristicsClass datacenterCharacteristics;
 	private ArrayList<HostClass> hosts;
 	public InstanceTypeClass[] vmInstances;
 	private ArrayList<CloudletClass> cloudlets;
@@ -33,5 +35,13 @@ public class Sim {
 		for(int i = 0; i < cloudlets.length; i++) {
 			this.cloudlets.add(cloudlets[i]);
 		}
+	}
+	
+	public ArrayList<HostClass> getHosts() {
+		return this.hosts;
+	}
+	
+	public ArrayList<CloudletClass> getCloudlets() {
+		return this.cloudlets;
 	}
 }

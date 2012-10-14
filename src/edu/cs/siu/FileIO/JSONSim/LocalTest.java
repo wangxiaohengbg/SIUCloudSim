@@ -12,6 +12,7 @@ class LocalTest {
 		json.generateHosts(5);
 		json.generateCloudlets(100);
 		json.useAmazonInstances();
+		json.generateDatacenterCharacteristics();
 		json.GenerateJson("files/example.json");
 	}
 }
