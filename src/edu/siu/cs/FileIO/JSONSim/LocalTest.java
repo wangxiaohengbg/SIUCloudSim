@@ -1,4 +1,4 @@
-package edu.cs.siu.FileIO.JSONSim;
+package edu.siu.cs.FileIO.JSONSim;
 
 /**
  * DELETE UPON FINISHING LIBRARY

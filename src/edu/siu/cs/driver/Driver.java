@@ -18,7 +18,7 @@ import org.cloudbus.cloudsim.provisioners.BwProvisionerSimple;
 import org.cloudbus.cloudsim.provisioners.PeProvisionerSimple;
 import org.cloudbus.cloudsim.provisioners.RamProvisionerSimple;
 
-import edu.cs.siu.FileIO.JSONSim.JsonParse;
+import edu.siu.cs.FileIO.JSONSim.JsonParse;
 
 public class Driver {
 	
