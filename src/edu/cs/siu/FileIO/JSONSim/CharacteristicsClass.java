@@ -5,7 +5,7 @@ import java.util.List;
 import org.cloudbus.cloudsim.DatacenterCharacteristics;
 import org.cloudbus.cloudsim.Host;
 
-public class CharacteristicsClass {
+class CharacteristicsClass {
 
 	private String architecture;
 	private String os;

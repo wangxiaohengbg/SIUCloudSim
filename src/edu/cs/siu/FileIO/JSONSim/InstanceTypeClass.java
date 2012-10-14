@@ -1,7 +1,5 @@
 package edu.cs.siu.FileIO.JSONSim;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.cloudbus.cloudsim.CloudletScheduler;
 import org.cloudbus.cloudsim.Vm;
 
@@ -25,7 +23,6 @@ class InstanceTypeClass {
 			CloudletScheduler c = (CloudletScheduler)cloudletScheduler.getConstructor().newInstance();
 			return new Vm(id, brokerId,this.mips,this.pesNumber,this.ram,this.bw,this.size,null,c);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}

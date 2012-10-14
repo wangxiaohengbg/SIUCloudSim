@@ -40,6 +40,7 @@ public class Driver {
 		DatacenterCharacteristics dcc = j.getDatacenterCharacteristics(hosts);
 		
 		//Create the broker and datacenter
+		@SuppressWarnings("unused")
 		Datacenter dc;
 		DatacenterBroker broker;
 		try {

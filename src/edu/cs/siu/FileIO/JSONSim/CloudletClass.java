@@ -6,10 +6,10 @@ import org.cloudbus.cloudsim.Cloudlet;
 import org.cloudbus.cloudsim.UtilizationModel;
 
 class CloudletClass {
-	public long MillionsOfInstructions;
-	public int Processors;
-	public long inputFileSize;
-	public long outputFileSize;
+	private long MillionsOfInstructions;
+	private int Processors;
+	private long inputFileSize;
+	private long outputFileSize;
 	
 	public CloudletClass(long length, int pes, long fileSize, long outputSize) {
 		this.MillionsOfInstructions = length;
