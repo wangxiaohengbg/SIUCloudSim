@@ -18,17 +18,6 @@ class CloudletClass {
 		this.outputFileSize = outputSize;
 	}
 	
-	/*
-	 * Cloudlet(
-	 * int cloudletId,
-	 * long cloudletLength,
-	 * int pesNumber,
-	 * long cloudletFileSize,
-	 * long cloudletOutputSize,
-	 * UtilizationModel utilizationModelCpu,
-	 * UtilizationModel utilizationModelRam,
-	 * UtilizationModel utilizationModelBw)
-	 */
 	public <T,S,U> Cloudlet convertToCloudlet(int id, Class<T> cpuUtilization, Class<S> ramUtilization, Class<U> bwUtilization) {
 		UtilizationModel cpuU;
 		UtilizationModel ramU;
