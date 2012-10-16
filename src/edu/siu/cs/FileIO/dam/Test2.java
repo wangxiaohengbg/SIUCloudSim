@@ -32,7 +32,7 @@ public class Test2 {
 			parse.startParse();
 			boolean[][] result = parse.getResult();
 			Assert.assertArrayEquals(this.GenerateError(correct, result),correct, result);
-			DependencyFactory.integrityCheck(result);
+			DAMFunctions.integrityCheck(result);
 		} catch (FileNotFoundException e) {
 			fail("File 'test2.dam' Not Found!");
 		} catch(Exception e) {
@@ -61,9 +61,9 @@ public class Test2 {
 			FileReader file = new FileReader("test2.dam");
 			DAMParser parse = new DAMParser(file);
 			parse.startParse();
-			boolean[][] result = DependencyFactory.resolveDependancies(parse.getResult());
+			boolean[][] result = DAMFunctions.resolveDependancies(parse.getResult());
 			Assert.assertArrayEquals(this.GenerateError(correct, result),correct, result);
-			DependencyFactory.integrityCheck(result);
+			DAMFunctions.integrityCheck(result);
 		} catch(FileNotFoundException e) {
 			fail("File 'test2.dam' Not Found!");
 		} catch(Exception e) {

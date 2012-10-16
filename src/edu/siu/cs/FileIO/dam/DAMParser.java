@@ -43,6 +43,7 @@ public class DAMParser {
 				buffer = new StringBuilder();
 			}
 		}
+		token(buffer.toString());
 		this.EOF();
 	}
 	
@@ -106,8 +107,6 @@ public class DAMParser {
 	 * Called when the end of the file is reached
 	 */
 	protected void EOF() {
-		@SuppressWarnings("unused")
-		int q = 5;
 	}
 	
 	/**

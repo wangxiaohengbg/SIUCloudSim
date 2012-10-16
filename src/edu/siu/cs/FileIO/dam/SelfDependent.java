@@ -9,7 +9,8 @@ public class SelfDependent {
 	@Test
 	public void test() {
 		try {
-			DependencyFactory.parseDependancies("test4.dam");
+			DAMParse p = new DAMParse();
+			p.parseDependancies("test4.dam");
 			fail("Did not catch exception");
 		} catch (DAMSelfDependent e) {
 			
