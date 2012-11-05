@@ -56,10 +56,12 @@ public class DAMFunctions {
 	 * Navigates the matrix and removes any self dependency.
 	 */
 	public static boolean[][] removeSelfDependencies(boolean[][] matrix) {
+		System.out.println("Removing Dependencies...");
 		for(int i = 0; i < matrix.length; i++) {
-				depends.push(i);
-				buildStack(matrix, i);
-				depends.clear();
+			System.out.println("Checking Row "+i);
+			depends.push(i);
+			buildStack(matrix, i);
+			depends.clear();
 		}
 		return matrix;
 	}

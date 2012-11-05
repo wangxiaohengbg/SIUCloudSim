@@ -9,7 +9,7 @@ class LocalTest {
 	public static void main(String[] args) {
 
 		DAMSmith d = new DAMSmith();
-		d.generateRandomFile(10, 8, "files/generated.dam");
+		d.generateRandomFile(100, 20, "files/generated.dam");
 		DAMParse p = new DAMParse();
 		try {
 			DAMFunctions.printMatrix(p.parseDependancies("files/generated.dam"));
