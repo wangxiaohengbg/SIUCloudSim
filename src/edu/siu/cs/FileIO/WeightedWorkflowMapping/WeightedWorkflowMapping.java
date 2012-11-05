@@ -19,7 +19,7 @@ import org.cloudbus.cloudsim.Cloudlet;
  * refer to this class (or any class that extends it) when
  * interacting with the ArrayList of cloudlets.
  * 
- * @author tlchack5
+ * @author Crackers
  *
  */
 public class WeightedWorkflowMapping {
