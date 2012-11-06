@@ -1,8 +1,9 @@
 package edu.siu.cs.FileIO.dam;
 
-import java.io.File;
-import java.io.FileWriter;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Stack;
 
 public class DAMSmith {
@@ -12,15 +13,19 @@ public class DAMSmith {
 		boolean[][] matrix = this.generateMatrix(jobCount, frequency);
 		matrix = DAMFunctions.removeSelfDependencies(matrix);
 		String result = smithFileContents(matrix);
+		System.out.println("Writing File To Disk");
 		writeFile(result, FileName);
 		return matrix;
 	}
 	
 	private void writeFile(String contents, String FileName) {
-		FileWriter f = openFile(FileName);
 		try {
-			f.write(contents);
-			f.close();
+			OutputStream stream = new FileOutputStream(FileName);
+			BufferedOutputStream output = new BufferedOutputStream(stream,2048*2);
+			output.write(contents.getBytes());
+			System.out.println("Write Finished, Closing Stream");
+			output.close();
+			System.out.println("Stream closed");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -47,21 +52,6 @@ public class DAMSmith {
 		}
 		return result.toString();
 	}
-	
-	private FileWriter openFile(String FileName) {
-		File f = new File(FileName);
-		if(f.exists()) {
-			f.delete();
-		}
-		try {
-			f.createNewFile();
-			FileWriter result = new FileWriter(f);
-			return result;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
 		
 	private boolean[][] generateMatrix(int jobCount, int frequency) {
 		System.out.println("Generating Matrix...");
@@ -73,6 +63,6 @@ public class DAMSmith {
 	}
 	
 	private boolean random(int frequency) {
-		return  ((int) (Math.random() * 2147483647)%frequency==0)? true : false;
+		return  ((int) (Math.random() * (frequency+1))%frequency==0)? true : false;
 	}
 }

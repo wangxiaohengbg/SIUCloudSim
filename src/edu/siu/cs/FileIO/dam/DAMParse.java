@@ -27,9 +27,12 @@ public class DAMParse {
 	 * @throws DAMFileNotFoundException 
 	 */
 	public boolean[][] parseDependancies(String filename) throws DAMFileNotFoundException, DAMSelfDependent, DAMOutOfBounds, IOException {
+		System.out.println("Opening File to Parse");
 		FileReader file = DAMParse.openFile(filename);
 		DAMParser parse = new DAMParser(file);
+		System.out.println("File Opened, Parsing File");
 		parse.startParse();
+		System.out.println("File Parsed and Closed");
 		return parse.getResult();
 	}
 	
