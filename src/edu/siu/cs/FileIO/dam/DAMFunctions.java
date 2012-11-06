@@ -80,9 +80,18 @@ public class DAMFunctions {
 	
 	public static boolean[][] removeSelfDependencies(boolean[][] matrix) {
 		TreeNode[] modules = DAMFunctions.generateTree(matrix);
+		modules = DAMFunctions.shuffleTree(modules);
 		if(modules==null)
 			return null;
 		return cleanTree(modules,matrix);
+	}
+	
+	private static TreeNode[] shuffleTree(TreeNode[] tree) {
+		System.out.println("Shuffling Tree References...");
+		for(int i=0;i<tree.length;i++) {
+			tree[i].shuffle();
+		}
+		return tree;
 	}
 	
 	/**
@@ -91,7 +100,8 @@ public class DAMFunctions {
 	 * @return
 	 * A cleaned tree data structure
 	 */
-	public static boolean[][] cleanTree(TreeNode[] tree, boolean[][] matrix) {
+	private static boolean[][] cleanTree(TreeNode[] tree, boolean[][] matrix) {
+		System.out.println("Removing Self Dependencies Using Tree...");
 		//Keeps track of which nodes have been checked for circular references
 		boolean[] checked = new boolean[tree.length];
 		
@@ -104,8 +114,9 @@ public class DAMFunctions {
 					//Get the next step in the path
 					TreeNode next = path.peek().getNext();
 					if(next!=null) {
+						//If the node is already in the path, sever the reference
+						//This is/else loop balances the table
 						if(path.contains(next)) {
-							//If the node is already in the path, sever the reference
 							matrix[next.id][path.peek().id] = false;
 						} else {
 							//Only do this step if node has not been checked already
@@ -131,6 +142,7 @@ public class DAMFunctions {
 	 * @return
 	 */
 	private static TreeNode[] generateTree(boolean[][] matrix) {
+		System.out.println("Building Tree Data Structure...");
 		//Get the number of nodes we will be generating
 		int size = matrix.length;
 		if(matrix.length>0)

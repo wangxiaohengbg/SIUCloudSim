@@ -56,9 +56,11 @@ public class DAMSmith {
 	private boolean[][] generateMatrix(int jobCount, int frequency) {
 		System.out.println("Generating Matrix...");
 		boolean[][] result = new boolean[jobCount][jobCount];
-		for(int i = 0; i < jobCount; i++)
+		for(int i = 0; i < jobCount; i++) {
 			for(int j = 0; j < jobCount; j++)
-				result[i][j] = random(frequency);
+				if(i!=j)
+					result[i][j] = random(frequency);
+		}
 		return result;
 	}
 	

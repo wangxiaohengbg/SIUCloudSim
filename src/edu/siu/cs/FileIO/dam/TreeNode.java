@@ -32,4 +32,10 @@ public class TreeNode {
 		else
 			return children.remove(0);
 	}
+	
+	public void shuffle() {
+		for(int i = 0; i<this.children.size()*4;i++) {
+			this.children.add(this.children.remove(((int)(Math.random()*this.children.size()))));
+		}
+	}
 }
