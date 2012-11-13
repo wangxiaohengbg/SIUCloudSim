@@ -13,6 +13,10 @@ public class DAMSmith {
 		boolean[][] matrix = this.generateMatrix(jobCount, frequency);
 		matrix = DAMFunctions.removeSelfDependencies(matrix);
 		String result = smithFileContents(matrix);
+		if(matrix.length>1000) {
+			System.out.println("File exceeds 1000 entries, setting matrix to null to free up space (function will return null)...");
+			matrix = null;
+		} 
 		System.out.println("Writing File To Disk");
 		writeFile(result, FileName);
 		return matrix;
@@ -21,8 +25,13 @@ public class DAMSmith {
 	private void writeFile(String contents, String FileName) {
 		try {
 			OutputStream stream = new FileOutputStream(FileName);
-			BufferedOutputStream output = new BufferedOutputStream(stream,2048*2);
-			output.write(contents.getBytes());
+			BufferedOutputStream output = new BufferedOutputStream(stream,4096);
+			for(int i = 0; i < contents.length(); i+=2048) {
+				if(i+2048<contents.length())
+					output.write(contents.substring(i, i+2048).getBytes());
+				else
+					output.write(contents.substring(i).getBytes());
+			}
 			System.out.println("Write Finished, Closing Stream");
 			output.close();
 			System.out.println("Stream closed");

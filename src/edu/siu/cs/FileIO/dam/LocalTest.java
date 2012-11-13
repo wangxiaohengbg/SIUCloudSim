@@ -29,15 +29,15 @@ class LocalTest {
 		
 		
 		DAMSmith d = new DAMSmith();
-		d.generateRandomFile(2000, 2, "files/generated.dam");
+		d.generateRandomFile(200, 3, "files/small.dam");
 		DAMParse p = new DAMParse();
-//		try {
-//			boolean[][] matrix = p.parseDependancies("files/generated.dam");
-//			DAMFunctions.integrityCheck(matrix);
-//			DAMFunctions.printMatrix(matrix);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		try {
+			boolean[][] matrix = p.parseDependancies("files/small.dam");
+			DAMFunctions.integrityCheck(matrix);
+			DAMFunctions.printMatrix(matrix);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

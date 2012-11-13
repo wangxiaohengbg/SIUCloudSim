@@ -9,10 +9,15 @@ class LocalTest {
 
 	public static void main(String args[]) {
 		JsonSmith json = new JsonSmith();
+		System.out.println("Generating Hosts...");
 		json.generateHosts(5);
-		json.generateCloudlets(100);
+		System.out.println("Generating Cloudlets...");
+		json.generateCloudlets(200);
+		System.out.println("Generating VM Instances...");
 		json.useAmazonInstances();
+		System.out.println("Generating Datacenter Characteristics...");
 		json.generateDatacenterCharacteristics();
-		json.GenerateJson("files/example.json");
+		System.out.println("Writing Data to File");
+		json.GenerateJson("files/small.json");
 	}
 }

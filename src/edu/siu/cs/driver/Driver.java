@@ -1,12 +1,11 @@
 package edu.siu.cs.driver;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.cloudbus.cloudsim.Cloudlet;
 import org.cloudbus.cloudsim.CloudletSchedulerTimeShared;
-import org.cloudbus.cloudsim.Datacenter;
-import org.cloudbus.cloudsim.DatacenterBroker;
 import org.cloudbus.cloudsim.DatacenterCharacteristics;
 import org.cloudbus.cloudsim.Host;
 import org.cloudbus.cloudsim.UtilizationModelFull;
@@ -19,6 +18,10 @@ import org.cloudbus.cloudsim.provisioners.PeProvisionerSimple;
 import org.cloudbus.cloudsim.provisioners.RamProvisionerSimple;
 
 import edu.siu.cs.FileIO.JSONSim.JsonParse;
+import edu.siu.cs.FileIO.dam.DAMParse;
+import edu.siu.cs.JobScheduling.Workflow.Workflow;
+import edu.siu.cs.JobScheduling.WorkflowBroker.WorkflowBroker;
+import edu.siu.cs.JobScheduling.WorkflowDatacenter.WorkflowDatacenter;
 
 public class Driver {
 	
@@ -31,7 +34,14 @@ public class Driver {
 		
 		//Parse in the JSON file
 		JsonParse j = new JsonParse();
-		j.parseJson("files/example.json");
+		j.parseJson("files/small.json");
+		DAMParse d = new DAMParse();
+		boolean[][] dependencies = null;
+		try {
+			dependencies = d.parseDependancies("files/small.dam");
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		
 		//Get hosts from parser
 		List<Host> hosts = j.getHosts(RamProvisionerSimple.class, BwProvisionerSimple.class, VmSchedulerTimeShared.class, PeProvisionerSimple.class);
@@ -41,11 +51,11 @@ public class Driver {
 		
 		//Create the broker and datacenter
 		@SuppressWarnings("unused")
-		Datacenter dc;
-		DatacenterBroker broker;
+		WorkflowDatacenter dc;
+		WorkflowBroker broker;
 		try {
-			dc = new Datacenter("test",dcc,new VmAllocationPolicySimple(hosts),null,0);
-			broker = new DatacenterBroker("broker");
+			dc = new WorkflowDatacenter("DATACENTER_0",dcc,new VmAllocationPolicySimple(hosts),null,0);
+			broker = new WorkflowBroker("broker");
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
@@ -58,8 +68,12 @@ public class Driver {
 			((Cloudlet)it.next()).setUserId(broker.getId());
 		}
 		
+		List<Workflow> workflow = new ArrayList<Workflow>();
+		workflow.add(new Workflow(dependencies, cloudlets));
+		
 		List<Vm> vmInstanceTypes = j.getVmInstanceTypes(broker.getId(), CloudletSchedulerTimeShared.class);
 		broker.submitVmList(vmInstanceTypes);
+		broker.submitWorkflowList(workflow);
 		
 		CloudSim.startSimulation();
 	}
