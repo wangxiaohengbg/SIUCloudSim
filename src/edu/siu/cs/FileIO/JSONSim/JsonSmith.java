@@ -20,22 +20,23 @@ import com.google.gson.GsonBuilder;
 public class JsonSmith {
 
 	//Default values for generating hosts
-	private int Hostquantity = 20;
-	private int HOSTminRam = 512;
-	private int HOSTmaxRam = 8192;
-	private int HOSTramInterval = 512;
-	private long HOSTminStorage = 10000;
-	private long HOSTmaxStorage = 100000;
-	private long HOSTstorageInterval = 5000;
-	private int HOSTminBW = 1000;
-	private int HOSTmaxBW = 20000;
-	private int HOSTbwInterval = 1000;
-	private int HOSTminPe = 1;
-	private int HOSTmaxPe = 4;
-	private int HOSTpeInterval = 1;
-	private int HOSTminMips = 1000;
-	private int HOSTmaxMips = 2000;
-	private int HOSTmipsInterval = 500;
+	//Default HOST values are based off of Amazon Values
+	private int Hostquantity = 50;
+	private int HOSTminRam = 15*1024*3;
+	private int HOSTmaxRam = 15*1024*4;
+	private int HOSTramInterval = 15*1024;
+	private long HOSTminStorage = 1000*3;
+	private long HOSTmaxStorage = 1000*4;
+	private long HOSTstorageInterval = 1000;
+	private int HOSTminBW = 1690*1024*3;
+	private int HOSTmaxBW = 1690*1024*4;
+	private int HOSTbwInterval = 1690*1024;
+	private int HOSTminPe = 8*3;
+	private int HOSTmaxPe = 8*4;
+	private int HOSTpeInterval = 8;
+	private int HOSTminMips = 3000*4;
+	private int HOSTmaxMips = 3000*3;
+	private int HOSTmipsInterval = 3000;
 	
 	//Default values for generating Cloudlets
 	private long CLOUDLETminLength = 10000;

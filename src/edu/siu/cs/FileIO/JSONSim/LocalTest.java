@@ -18,6 +18,7 @@ class LocalTest {
 		System.out.println("Generating Datacenter Characteristics...");
 		json.generateDatacenterCharacteristics();
 		System.out.println("Writing Data to File");
-		json.GenerateJson("files/small.json");
+		json.GenerateJson("files/working.json");
+		System.out.println("Done!");
 	}
 }
