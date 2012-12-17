@@ -12,6 +12,36 @@ import org.junit.Test;
 public class Test1 {
 
 	@Test
+	public void test_getRootNodes() {
+		long matrix[][] = 
+				//0	 1  2  3  4	 5  6  7  8	 9 10 11 12 13
+			{	{00,00,00,10,10,00,00,00,00,00,00,00,00,00},//0
+				{00,00,00,00,10,10,00,00,00,00,00,00,00,00},//1
+				{00,00,00,00,00,00,10,00,00,00,00,00,00,00},//2
+				{00,00,00,00,00,00,00,10,00,00,00,00,00,00},//3
+				{00,00,00,00,00,00,00,10,10,00,00,00,00,00},//4
+				{00,00,00,00,00,00,00,00,10,10,00,00,00,00},//5
+				{00,00,00,00,00,00,00,00,00,10,00,00,00,00},//6
+				{00,00,00,00,00,00,00,00,00,00,10,00,00,00},//7
+				{00,00,00,00,00,00,00,00,00,00,10,00,00,00},//8
+				{00,00,00,00,00,00,00,00,00,00,10,00,00,00},//9
+				{00,00,00,00,00,00,00,00,00,00,00,10,10,00},//10
+				{00,00,00,00,00,00,00,00,00,00,00,00,00,00},//11
+				{00,00,00,00,00,00,00,00,00,00,00,00,00,00},//12
+				{00,10,00,00,00,00,00,00,00,00,00,00,00,00} //13
+			};
+		int[] expecteds = {0,2,13};
+		WeightedWorkflowMapping test = new WeightedWorkflowMapping(matrix);
+		int[] actuals = test.getRootNodes();
+		System.out.print("Returned Values: {");
+		for(int i = 0; i < actuals.length; i++) {
+			if(i!=0) {System.out.print(",");}
+			System.out.print(actuals[i]);
+		}
+		System.out.println("}");
+		assertArrayEquals(expecteds, actuals);
+	}
+	@Test
 	public void test() {
 		boolean matrix[][] = 
 			{	{false,false,false,false,false,false},

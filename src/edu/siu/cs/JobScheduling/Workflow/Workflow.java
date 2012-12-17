@@ -6,12 +6,22 @@ import java.util.List;
 import org.cloudbus.cloudsim.Cloudlet;
 import org.cloudbus.cloudsim.Log;
 
+/**
+ * This is a class that represents the weighted dependency adjacency matrix of
+ * all the cloudlets along with the cloudlets themselves.
+ * @author Crackers
+ *
+ */
 public class Workflow {
 
-	private static int IDGEN = 0;
-	private int ID;
-	private WeightedWorkflowMapping dependencyMap;
-	private ArrayList<Cloudlet> cloudlets;
+	private static int IDGEN = 0; //Used for assigning IDs to Workflows
+	private int ID; //The ID of this Workflow
+	/**
+	 * It is important to note that the order that Cloudlets appear in the ArrayList
+	 * is their ID in the dependencyMap. (i.e. cloudlets.get(i) == dependencyMap.get(i,x))
+	 */
+	private WeightedWorkflowMapping dependencyMap; //The weighted dependency adjacency matrix
+	private ArrayList<Cloudlet> cloudlets; //The processes/jobs/cloudlets represented in this workflow
 	
 	@SuppressWarnings("unchecked")
 	public Workflow(boolean[][] dependencies, List<Cloudlet> cloudlets) {
@@ -48,4 +58,5 @@ public class Workflow {
 	public int getId() {
 		return this.ID;
 	}
+
 }

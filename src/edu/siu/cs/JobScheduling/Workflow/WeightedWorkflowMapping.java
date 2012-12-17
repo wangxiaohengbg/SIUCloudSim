@@ -26,6 +26,16 @@ class WeightedWorkflowMapping {
 
 	private long[][] dependencyMap;
 
+	/**
+	 * Manually assign the values of a dependencyMap. The ONLY reason this constructor
+	 * should be used is to test the functions of this class. Otherwise use the other
+	 * constructors
+	 * @param dependencyMap
+	 * @deprecated
+	 */
+	public WeightedWorkflowMapping(long[][] dependencyMap) {
+		this.dependencyMap=dependencyMap;
+	}
 	public WeightedWorkflowMapping(boolean[][] adjacencyMatrix, ArrayList<Cloudlet> cloudlets) {
 		if(cloudlets.size()>0) {
 			this.dependencyMap = new long[cloudlets.size()][cloudlets.size()];
@@ -67,6 +77,24 @@ class WeightedWorkflowMapping {
 		}
 		
 		return this.dependencyMap[i][j];
+	}
+	
+	public int[] getRootNodes() {
+		ArrayList<Integer> rootNodes = new ArrayList<Integer>();
+		for(int i=0; i<this.dependencyMap.length;i++) {
+			boolean isRootNode = true;
+			for(int j=0; j<this.dependencyMap[0].length;j++) {
+				if(this.getValue(j, i)!=0){isRootNode=false;break;}
+			}
+			if(isRootNode){rootNodes.add(i);}
+		}
+		Iterator<Integer> it = rootNodes.iterator();
+		int result[] = new int[rootNodes.size()];
+		int i = 0;
+		while(it.hasNext()&&i<result.length) {
+			result[i++]=it.next();
+		}
+		return result;
 	}
 	
 	public int getSize() {
